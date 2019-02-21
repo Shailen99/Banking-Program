@@ -18,6 +18,7 @@ Once they have entered the info, create a new text file titled as their username
         {
             System.out.println("1. Log In");
             System.out.println("2. Sign Up");
+            System.out.println("3. Exit Program");
 
             int choice = sc.nextInt();
 
@@ -28,6 +29,10 @@ Once they have entered the info, create a new text file titled as their username
                     break;
                 case 2:
                     usefunctions.SignUp();
+                    break;
+                case 3:
+                    System.out.println("Thank You for Using");
+                    usefunctions.Exit();
                     break;
             }
         }

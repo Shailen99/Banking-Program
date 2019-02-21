@@ -84,6 +84,11 @@ public class UserFunctions {
         }
     }
 
+    void Exit()
+    {
+        System.exit(0);
+    }
+
 
 
 }
