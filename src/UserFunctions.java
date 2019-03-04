@@ -77,11 +77,13 @@ public class UserFunctions {
 
             writer.write(password);
             writer.close();
-
-
+            ArrayList <BufferedWriter> Accounts =new ArrayList <BufferedWriter>();
+            Accounts.add(writer);
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     void Exit()
