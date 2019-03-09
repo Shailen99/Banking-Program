@@ -3,20 +3,57 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import java.io.File;
 public class UserFunctions {
-
-    ArrayList<User> Registered =new ArrayList <User>();
     Scanner sc = new Scanner(System.in);
     boolean validated = false;
     void SignUp()
     {
+        boolean start = false;
+
         System.out.println("Please enter a username");
         String username = sc.next();
+
+        //Compare inputted username to already kept files
+
+        ArrayList<String> fileNames = new ArrayList<String>();
+        File[] directory = new File("src/TextFiles").listFiles();
+
+
+        for(int i = 0; i < directory.length; i++)
+        {
+            fileNames.add(directory[i].toString());
+            //Converting directory into an arraylist of strings
+            String usercheck = "src/TextFiles/" + username + ".txt";
+
+            System.out.println(fileNames);
+            //Removing other parts of the string to only include the value of the name
+            if(fileNames.contains(usercheck))
+            {
+                start = true;
+                while(start)
+                {
+                    System.out.println("Username already in use");
+                    System.out.println("Please enter a username");
+                    username = sc.next();
+                    usercheck = "src/TextFiles/" + username + ".txt";
+
+                    if(fileNames.contains(usercheck))
+                    {
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                }
+            }
+        }
 
         //Validating Username
         System.out.println("Please validate the given username");
         String _username = sc.next();
+        System.out.println();
 
         if(username.equals(_username))
         {
@@ -29,7 +66,6 @@ public class UserFunctions {
             {
                 System.out.println("Please validate the given username");
                 _username = sc.next();
-
                 if(username.matches(_username))
                 {
                     break;
@@ -49,9 +85,8 @@ public class UserFunctions {
         System.out.println("Please validate password:");
         String _password = sc.next();
 
-        if(password.equals(password))
+        if(password.equals(_password))
         {
-
         }
         else{
             validatePassword = true;
@@ -72,14 +107,11 @@ public class UserFunctions {
         System.out.println("All Done! Your information should be in a text file.");
         System.out.println("Exit the program in the main menu to see the file.");
         try {
-            String fileName = username + ".txt";
+            String fileName = "/Users/shailensheth/IdeaProjects/BankingProgram/src/TextFiles/" + username + ".txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
 
             writer.write(password);
             writer.close();
-            ArrayList <BufferedWriter> Accounts =new ArrayList <BufferedWriter>();
-            Accounts.add(writer);
-            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -89,6 +121,11 @@ public class UserFunctions {
     void Exit()
     {
         System.exit(0);
+    }
+
+
+    void ShowUsers()
+    {
     }
 
 

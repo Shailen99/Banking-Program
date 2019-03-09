@@ -20,17 +20,17 @@ Once they have entered the info, create a new text file titled as their username
             System.out.println("2. Sign Up");
             System.out.println("3. Exit Program");
 
-            int choice = sc.nextInt();
+            String choice = sc.next();
 
             switch(choice)
             {
-                case 1:
+                case "1":
                     System.out.println("Sorry, this function has not been implemented!");
                     break;
-                case 2:
+                case "2":
                     usefunctions.SignUp();
                     break;
-                case 3:
+                case "3":
                     System.out.println("Thank You for Using");
                     usefunctions.Exit();
                     break;
