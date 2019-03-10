@@ -15,18 +15,14 @@ public class UserFunctions {
         String username = sc.next();
 
         //Compare inputted username to already kept files
-
         ArrayList<String> fileNames = new ArrayList<String>();
         File[] directory = new File("src/TextFiles").listFiles();
-
 
         for(int i = 0; i < directory.length; i++)
         {
             fileNames.add(directory[i].toString());
             //Converting directory into an arraylist of strings
             String usercheck = "src/TextFiles/" + username + ".txt";
-
-            System.out.println(fileNames);
             //Removing other parts of the string to only include the value of the name
             if(fileNames.contains(usercheck))
             {
@@ -124,10 +120,47 @@ public class UserFunctions {
     }
 
 
-    void ShowUsers()
+    void Login()
     {
+        boolean verify = false;
+        System.out.println("Log In");
+        System.out.println("Username:");
+        String username = sc.next();
+
+        //Verifying if this is a valid Username
+        ArrayList<String> fileNames = new ArrayList<String>();
+        File[] directory = new File("src/TextFiles").listFiles();
+
+        for(int i = 0; i < directory.length; i++) {
+            fileNames.add(directory[i].toString());
+            //Converting directory into an arraylist of strings
+        }
+        String UsernameValidation = "src/TextFiles/" + username + ".txt";
+
+        //Checking if this is a valid username
+            if(fileNames.contains(UsernameValidation))
+            {
+                System.out.println();
+                System.out.println("Thank you for Logging In.");
+            }
+            else
+            {
+                verify = true;
+                while(verify)
+                {
+                    System.out.println("Username is not valid");
+                    System.out.println("Please enter a valid username");
+                    username = sc.next();
+                    UsernameValidation = "src/TextFiles/" + username + ".txt";
+
+                    if(fileNames.contains(UsernameValidation))
+                    {
+                        break;
+                    }
+                }
+
+            }
+        }
+
+
     }
-
-
-
-}

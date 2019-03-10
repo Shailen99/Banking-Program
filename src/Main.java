@@ -25,7 +25,7 @@ Once they have entered the info, create a new text file titled as their username
             switch(choice)
             {
                 case "1":
-                    System.out.println("Sorry, this function has not been implemented!");
+                    usefunctions.Login();
                     break;
                 case "2":
                     usefunctions.SignUp();
