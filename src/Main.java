@@ -14,6 +14,7 @@ Once they have entered the info, create a new text file titled as their username
         UserFunctions usefunctions = new UserFunctions();
         boolean menuIsActive = true;
         Scanner sc = new Scanner(System.in);
+
         while(menuIsActive)
         {
             System.out.println("1. Log In");
@@ -26,6 +27,7 @@ Once they have entered the info, create a new text file titled as their username
             {
                 case "1":
                     usefunctions.Login();
+
                     break;
                 case "2":
                     usefunctions.SignUp();

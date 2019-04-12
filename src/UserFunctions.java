@@ -1,3 +1,4 @@
+import javax.jws.soap.SOAPBinding;
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
 import java.io.FileWriter;
@@ -123,51 +124,86 @@ public class UserFunctions {
         System.exit(0);
     }
 
-
-    void Login()
-    {
+    void Login() {
+        boolean loggedMenuIsActive = true;
         boolean verify = false;
         System.out.println("Log In");
         System.out.println("Username:");
         String username = sc.next();
 
-        //Verifying if this is a valid Username
+        //Entering Password
+        System.out.println();
+        System.out.println("Password:");
+        String Password = sc.next();
+
+        //Verifying Username
+
+        boolean passwordValid = false;
+        boolean usernameValid = false;
+
         ArrayList<String> fileNames = new ArrayList<String>();
         File[] directory = new File("src/TextFiles").listFiles();
 
-        for(int i = 0; i < directory.length; i++) {
+        for (int i = 0; i < directory.length; i++) {
             fileNames.add(directory[i].toString());
             //Converting directory into an arraylist of strings
         }
         String UsernameValidation = "src/TextFiles/" + username + ".txt";
 
         //Checking if this is a valid username
-            if(fileNames.contains(UsernameValidation))
-            {
+        if (fileNames.contains(UsernameValidation)) {
+            usernameValid = true;
+        } else {
+            verify = true;
+            while (verify) {
+                System.out.println("Username is invalid");
             }
-            else
-            {
-                verify = true;
-                while(verify)
-                {
-                    System.out.println("Username is not valid");
-                    System.out.println("Please enter a valid username");
-                    username = sc.next();
-                    UsernameValidation = "src/TextFiles/" + username + ".txt";
 
-                    if(fileNames.contains(UsernameValidation))
-                    {
-                        break;
-                    }
-                }
+        }
+        String strCurrentLine = Password;
 
-            }
-            //Entering Password
-        System.out.println();
-        System.out.println("Password:");
-        String Password = sc.next();
         //Verifying Password
+        try {
+
+            BufferedReader objReader = new BufferedReader(new FileReader(UsernameValidation));
+            String a = objReader.readLine();
+
+            if (a.equals(Password)) {
+                System.out.println("You are now logged in");
+                passwordValid = true;
+            } else {
+                System.out.println("Password Invalid");
+            }
+            // if(strCurrentLine.equals(Password))
+
+
+            objReader.close();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
         }
 
+        Scanner scan = new Scanner(System.in);
+        if (passwordValid == true && usernameValid == true) {
+            while (loggedMenuIsActive) {
+                System.out.println("1. Deposit Money");
+                System.out.println("2. Withdraw Money");
+                System.out.println("3. Exit Program");
+
+                String action = scan.next();
+
+                switch (action) {
+                    case "1":
+                    case "2":
+                    case "3":
+                        System.out.println("Thanks for Using");
+                        System.exit(0);
+                        break;
+
+                }//
+            }
+        }
     }
 }
