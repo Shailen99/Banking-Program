@@ -171,11 +171,8 @@ public class UserFunctions {
             if (a.equals(Password)) {
                 System.out.println("You are now logged in");
                 passwordValid = true;
-            } else {
-                System.out.println("Password Invalid");
             }
             // if(strCurrentLine.equals(Password))
-
 
             objReader.close();
 
@@ -186,8 +183,10 @@ public class UserFunctions {
         }
 
         Scanner scan = new Scanner(System.in);
+
         if (passwordValid == true && usernameValid == true) {
             while (loggedMenuIsActive) {
+                //Log In Menu
                 System.out.println("1. Deposit Money");
                 System.out.println("2. Withdraw Money");
                 System.out.println("3. Exit Program");
@@ -196,14 +195,31 @@ public class UserFunctions {
 
                 switch (action) {
                     case "1":
+                        System.out.println("lol");
+                        break;
                     case "2":
+                        System.out.println("lol");
+                        break;
                     case "3":
                         System.out.println("Thanks for Using");
                         System.exit(0);
                         break;
 
-                }//
+                }
             }
+        }
+        else if(passwordValid == true && usernameValid != true)
+        {
+            System.out.println("Sorry but your username is invalid");
+        }
+        else if(passwordValid != true && usernameValid != true)
+        {
+            System.out.println("Both Username and Password are invalid");
+        }
+
+        else if(passwordValid != true && usernameValid == true)
+        {
+            System.out.println("Sorry but Password is invalid");
         }
     }
 }
