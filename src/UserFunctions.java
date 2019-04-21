@@ -2,6 +2,7 @@ import java.io.BufferedWriter;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.rmi.registry.LocateRegistry;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
@@ -45,7 +46,6 @@ public class UserFunctions {
                     {
                         break;
                     }
-
                 }
             }
         }
@@ -107,7 +107,7 @@ public class UserFunctions {
         System.out.println("All Done! Your information should be in a text file.");
         System.out.println("Exit the program in the main menu to see the file.");
         try {
-            String fileName = "/Users/shailensheth/IdeaProjects/BankingProgram/src/TextFiles/" + username + ".txt";
+            String fileName = "src/TextFiles/" + username + ".txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
 
             writer.write(password);
@@ -149,86 +149,109 @@ public class UserFunctions {
         }
         String UsernameValidation = "src/TextFiles/" + username + ".txt";
 
-        //Checking if this is a valid username
+
+        //Checking if File EXISTS
         if (fileNames.contains(UsernameValidation)) {
             usernameValid = true;
         } else {
-            verify = true;
-            while (verify) {
-                System.out.println("Username is invalid");
-            }
+            System.out.println("Inputs do not exist for Username and Password");
+            usernameValid = false;
+            passwordValid = false;
 
         }
-        String strCurrentLine = Password;
+
 
         //Verifying Password
-        try {
+        if (usernameValid) {
+            try {
 
-            BufferedReader objReader = new BufferedReader(new FileReader(UsernameValidation));
-            String a = objReader.readLine();
+                BufferedReader objReader = new BufferedReader(new FileReader(UsernameValidation));
+                String a = objReader.readLine();
 
-            if (a.equals(Password)) {
-                System.out.println("You are now logged in");
-                passwordValid = true;
-            }
-            // if(strCurrentLine.equals(Password))
-
-            objReader.close();
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
-        }
-        //Log In Menu
-
-        Scanner scan = new Scanner(System.in);
-        Scanner depositValue = new Scanner(System.in);
-        Scanner withdrawValue = new Scanner(System.in);
-
-        if (passwordValid == true && usernameValid == true) {
-            while (loggedMenuIsActive) {
-                System.out.println("1. Deposit Money");
-                System.out.println("2. Withdraw Money");
-                System.out.println("3. Exit");
-
-                String action = scan.next();
-
-                switch (action) {
-                    case "1":
-                        System.out.println("How much money would you like to enter into your account?");
-                        String despositPrint = depositValue.next();
-
-                        System.out.println("+" + despositPrint + " has been added to your account");
-
-                        break;
-                    case "2":
-                        System.out.println("How much money would you like to take from your account?");
-                        String withdrawPrint = withdrawValue.next();
-
-                        System.out.println("+" + withdrawPrint + " has been added to your account");
-
-                        break;
-                    case "3":
-                        System.out.println("Thanks for Using");
-                        System.exit(0);
-                        break;
-
+                if (a.equals(Password)) {
+                    System.out.println("You are now logged in");
+                    passwordValid = true;
                 }
-            }
-        }
-        else if(passwordValid == true && usernameValid != true)
-        {
-            System.out.println("Sorry but your username is invalid");
-        }
-        else if(passwordValid != true && usernameValid != true)
-        {
-            System.out.println("Both Username and Password are invalid");
-        }
 
-        else if(passwordValid != true && usernameValid == true)
-        {
-            System.out.println("Sorry but Password is invalid");
+                objReader.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //Log In Menu
+
+            Scanner scan = new Scanner(System.in);
+            Scanner depositValue = new Scanner(System.in);
+            Scanner withdrawValue = new Scanner(System.in);
+
+            if (passwordValid == true && usernameValid == true) {
+                while (loggedMenuIsActive) {
+                    System.out.println("1. Deposit Money");
+                    System.out.println("2. Withdraw Money");
+                    System.out.println("3. Exit");
+
+                    String action = scan.next();
+                    int total = 0;
+                    switch (action) {
+                        case "1":
+                            System.out.println("How much money would you like to enter into your account?");
+                            String depositPrint = depositValue.next();
+                            if (depositPrint.matches("[0-9]+")) {
+
+                                int depositVal = Integer.parseInt(depositPrint);
+
+                                try{
+                                    BufferedWriter writer = new BufferedWriter(new FileWriter(UsernameValidation,true));
+
+                                    writer.newLine();
+
+                                    writer.write(depositVal + " dollars have been added to your account");
+
+                                    writer.close();
+                                } catch (IOException e)
+                                {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                System.out.println("Please Enter A Valid Amount");
+                            }
+
+                            break;
+                        case "2":
+                            System.out.println("How much money would you like to take from your account?");
+                            String withdrawPrint = withdrawValue.next();
+
+                            if (withdrawPrint.matches("[0-9]+")) {
+
+                                int withdrawVal = Integer.parseInt(withdrawPrint);
+                                System.out.println(total);
+                                try{
+                                    BufferedWriter writer = new BufferedWriter(new FileWriter(UsernameValidation,true));
+
+                                    writer.newLine();
+
+                                    writer.write(withdrawVal + " dollars have been taken from your account");
+
+                                    writer.close();
+                                } catch (IOException e)
+                                {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                System.out.println("Please Enter A Valid Amount");
+                            }
+
+                            break;
+                        case "3":
+                            System.out.println("Thanks for Using");
+                            System.exit(0);
+                            break;
+
+                    }
+                }
+            } else if (passwordValid != true && usernameValid == true) {
+                System.out.println("Sorry but Password is invalid");
+            }
         }
     }
 }
