@@ -1,4 +1,3 @@
-import javax.jws.soap.SOAPBinding;
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
 import java.io.FileWriter;
@@ -181,24 +180,34 @@ public class UserFunctions {
             e.printStackTrace();
 
         }
+        //Log In Menu
 
         Scanner scan = new Scanner(System.in);
+        Scanner depositValue = new Scanner(System.in);
+        Scanner withdrawValue = new Scanner(System.in);
 
         if (passwordValid == true && usernameValid == true) {
             while (loggedMenuIsActive) {
-                //Log In Menu
                 System.out.println("1. Deposit Money");
                 System.out.println("2. Withdraw Money");
-                System.out.println("3. Exit Program");
+                System.out.println("3. Exit");
 
                 String action = scan.next();
 
                 switch (action) {
                     case "1":
-                        System.out.println("lol");
+                        System.out.println("How much money would you like to enter into your account?");
+                        String despositPrint = depositValue.next();
+
+                        System.out.println("+" + despositPrint + " has been added to your account");
+
                         break;
                     case "2":
-                        System.out.println("lol");
+                        System.out.println("How much money would you like to take from your account?");
+                        String withdrawPrint = withdrawValue.next();
+
+                        System.out.println("+" + withdrawPrint + " has been added to your account");
+
                         break;
                     case "3":
                         System.out.println("Thanks for Using");
