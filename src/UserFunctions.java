@@ -1,3 +1,4 @@
+import javax.sound.sampled.Line;
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
 import java.io.FileWriter;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileReader;
+import java.io.LineNumberReader;
 
 public class UserFunctions {
     Scanner sc = new Scanner(System.in);
@@ -189,6 +191,8 @@ public class UserFunctions {
                 while (loggedMenuIsActive) {
 
 
+                    int LineNumber = 0;
+
                     //Checking Total Balance Value
                     int total = 0;
                     String line;
@@ -199,8 +203,9 @@ public class UserFunctions {
 
                         line = br.readLine();
 
-                        while(line != null)
+                        while(line != null && line.length()>0)
                         {
+                            LineNumber++; //Counts number of transactions
                             char c = line.charAt(0);
                             if(c == 43) //deposit
                             {
@@ -217,6 +222,12 @@ public class UserFunctions {
                               WithdrawValue = WithdrawValue * -1;
                                 total = total - WithdrawValue;
                             }
+
+                            else if(line.length()<1)
+                            {
+                                break;
+                            }
+
                             line = br.readLine();
                         }
                     }
@@ -293,20 +304,35 @@ public class UserFunctions {
                             break;
                         case "3":
                             System.out.println("Thanks for Using");
+                            System.out.println("Added Total Balance to your Profile Sheet!");
+                            LineNumber = LineNumber + 1;
+                            try
+                            {
+                                BufferedWriter writer = new BufferedWriter(new FileWriter(UsernameValidation,true));
+                                LineNumberReader  lnr = new LineNumberReader(new FileReader(UsernameValidation));
+                                lnr.setLineNumber(LineNumber);
+
+
+                                for(int i=1;i<=lnr.getLineNumber();i++){
+                                    writer.newLine();
+                                }
+                                writer.write("Total Balance: " + total);
+                                writer.close();
+                                lnr.close();
+
+                            } catch (IOException e)
+                            {
+                                e.printStackTrace();
+                            }
+
+
                             System.exit(0);
                             break;
 
                     }
 
-                    try
-                    {
-                        BufferedWriter writer = new BufferedWriter(new FileWriter(UsernameValidation,true
 
-                    } catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
-
+                    //Adds total 10 lines below the latest transaction
                 }
             } else if (passwordValid != true && usernameValid == true) {
                 System.out.println("Sorry but Password is invalid");
