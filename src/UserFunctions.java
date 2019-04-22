@@ -210,11 +210,11 @@ public class UserFunctions {
                                 total = total + DepositValue;
 
                             }
-                             if(c == 45) //withdraw
+                             else if(c == 45) //withdraw
                             {
-                                charRemoveAt(line, 0);
-                                int WithdrawValue = Integer.parseInt(line);
-
+                              charRemoveAt(line, 0);
+                              int WithdrawValue = Integer.parseInt(line);
+                              WithdrawValue = WithdrawValue * -1;
                                 total = total - WithdrawValue;
                             }
                             line = br.readLine();
@@ -296,6 +296,15 @@ public class UserFunctions {
                             System.exit(0);
                             break;
 
+                    }
+
+                    try
+                    {
+                        BufferedWriter writer = new BufferedWriter(new FileWriter(UsernameValidation,true
+
+                    } catch (IOException e)
+                    {
+                        e.printStackTrace();
                     }
 
                 }
