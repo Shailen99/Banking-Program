@@ -184,28 +184,74 @@ public class UserFunctions {
             Scanner depositValue = new Scanner(System.in);
             Scanner withdrawValue = new Scanner(System.in);
 
+
             if (passwordValid == true && usernameValid == true) {
                 while (loggedMenuIsActive) {
+
+
+                    //Checking Total Balance Value
+                    int total = 0;
+                    String line;
+                    try
+                    {
+                        BufferedReader br = new BufferedReader(new FileReader(UsernameValidation));
+                        br.readLine();
+
+                        line = br.readLine();
+
+                        while(line != null)
+                        {
+                            char c = line.charAt(0);
+                            if(c == 43) //deposit
+                            {
+                               charRemoveAt(line, 0);
+                                int DepositValue = Integer.parseInt(line);
+
+                                total = total + DepositValue;
+
+                            }
+                             if(c == 45) //withdraw
+                            {
+                                charRemoveAt(line, 0);
+                                int WithdrawValue = Integer.parseInt(line);
+
+                                total = total - WithdrawValue;
+                            }
+                            line = br.readLine();
+                        }
+                    }
+                    catch(IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                    //Main Menu
+                    System.out.println("Current Total: " + total);
                     System.out.println("1. Deposit Money");
                     System.out.println("2. Withdraw Money");
                     System.out.println("3. Exit");
 
                     String action = scan.next();
-                    int total = 0;
+                    ArrayList<Integer> DepositValues = new ArrayList<Integer>();
+                    ArrayList<Integer> WithdrawValues = new ArrayList<Integer>();
+
                     switch (action) {
                         case "1":
+
+
                             System.out.println("How much money would you like to enter into your account?");
                             String depositPrint = depositValue.next();
                             if (depositPrint.matches("[0-9]+")) {
 
                                 int depositVal = Integer.parseInt(depositPrint);
+                                DepositValues.add(depositVal);
 
                                 try{
                                     BufferedWriter writer = new BufferedWriter(new FileWriter(UsernameValidation,true));
 
                                     writer.newLine();
 
-                                    writer.write(depositVal + " dollars have been added to your account");
+                                    writer.write("+" + depositVal);
 
                                     writer.close();
                                 } catch (IOException e)
@@ -224,13 +270,16 @@ public class UserFunctions {
                             if (withdrawPrint.matches("[0-9]+")) {
 
                                 int withdrawVal = Integer.parseInt(withdrawPrint);
+
+                                WithdrawValues.add(withdrawVal);
+
                                 System.out.println(total);
                                 try{
                                     BufferedWriter writer = new BufferedWriter(new FileWriter(UsernameValidation,true));
 
                                     writer.newLine();
 
-                                    writer.write(withdrawVal + " dollars have been taken from your account");
+                                    writer.write("-" + withdrawVal);
 
                                     writer.close();
                                 } catch (IOException e)
@@ -248,10 +297,14 @@ public class UserFunctions {
                             break;
 
                     }
+
                 }
             } else if (passwordValid != true && usernameValid == true) {
                 System.out.println("Sorry but Password is invalid");
             }
         }
+    }
+    public static String charRemoveAt(String str, int p) {
+        return str.substring(0, p) + str.substring(p + 1);
     }
 }
