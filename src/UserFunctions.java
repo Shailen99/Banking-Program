@@ -188,20 +188,31 @@ public class UserFunctions {
 
 
             if (passwordValid == true && usernameValid == true) {
+                int LineNumber = 0;
+                String line;
+
+                int totalBalance = 0;
                 while (loggedMenuIsActive) {
+                int total = 0;
+
+                    //Delete old total to allow for new transactions to occur
 
 
-                    int LineNumber = 0;
-
-                    //Checking Total Balance Value
-                    int total = 0;
-                    String line;
                     try
                     {
                         BufferedReader br = new BufferedReader(new FileReader(UsernameValidation));
                         br.readLine();
 
+
                         line = br.readLine();
+
+                        //Delete old total to allow for new transactions to occur
+                        while(line == null)
+                        {
+                            
+                        }
+
+                        //Checking Total Balance Value
 
                         while(line != null && line.length()>0)
                         {
@@ -222,14 +233,9 @@ public class UserFunctions {
                               WithdrawValue = WithdrawValue * -1;
                                 total = total - WithdrawValue;
                             }
-
-                            else if(line.length()<1)
-                            {
-                                break;
-                            }
-
                             line = br.readLine();
                         }
+
                     }
                     catch(IOException e)
                     {
@@ -240,7 +246,7 @@ public class UserFunctions {
                     System.out.println("Current Total: " + total);
                     System.out.println("1. Deposit Money");
                     System.out.println("2. Withdraw Money");
-                    System.out.println("3. Exit");
+                    System.out.println("3. Exit and Save Total Balance");
 
                     String action = scan.next();
                     ArrayList<Integer> DepositValues = new ArrayList<Integer>();
@@ -304,7 +310,10 @@ public class UserFunctions {
                             break;
                         case "3":
                             System.out.println("Thanks for Using");
-                            System.out.println("Added Total Balance to your Profile Sheet!");
+
+
+                            //Adds total 10 lines below the latest transaction
+
                             LineNumber = LineNumber + 1;
                             try
                             {
@@ -316,7 +325,7 @@ public class UserFunctions {
                                 for(int i=1;i<=lnr.getLineNumber();i++){
                                     writer.newLine();
                                 }
-                                writer.write("Total Balance: " + total);
+                                writer.write("=" + total);
                                 writer.close();
                                 lnr.close();
 
@@ -325,14 +334,10 @@ public class UserFunctions {
                                 e.printStackTrace();
                             }
 
-
                             System.exit(0);
                             break;
-
                     }
 
-
-                    //Adds total 10 lines below the latest transaction
                 }
             } else if (passwordValid != true && usernameValid == true) {
                 System.out.println("Sorry but Password is invalid");
