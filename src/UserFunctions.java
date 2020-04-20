@@ -179,10 +179,6 @@ public class UserFunctions {
 
             while (loggedMenuIsActive) {
                 int total = 0;
-
-                //Delete old total to allow for new transactions to occur
-
-
                 try {
                     BufferedReader br = new BufferedReader(new FileReader(UsernameValidation));
                     br.readLine();
